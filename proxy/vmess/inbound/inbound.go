@@ -226,6 +226,7 @@ func (h *Handler) Process(ctx context.Context, network net.Network, connection i
 	log.Println(network)
 	log.Println(connection)
 	log.Println(dispatcher)
+	
 	sessionPolicy := h.policyManager.ForLevel(0)
 	if err := connection.SetReadDeadline(time.Now().Add(sessionPolicy.Timeouts.Handshake)); err != nil {
 		return newError("unable to set read deadline").Base(err).AtWarning()
