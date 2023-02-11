@@ -223,9 +223,9 @@ func isInsecureEncryption(s protocol.SecurityType) bool {
 // Process implements proxy.Inbound.Process().
 func (h *Handler) Process(ctx context.Context, network net.Network, connection internet.connection, dispatcher routing.Dispatcher) error {
 	log2.Println(ctx)
-	log2.Println(network)
-	log2.Println(connection)
-	log2.Println(dispatcher)
+	// log2.Println(network)
+	// log2.Println(connection)
+	// log2.Println(dispatcher)
 	
 	sessionPolicy := h.policyManager.ForLevel(0)
 	if err := connection.SetReadDeadline(time.Now().Add(sessionPolicy.Timeouts.Handshake)); err != nil {
