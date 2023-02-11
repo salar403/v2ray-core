@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	log2 "log"
 
 	core "github.com/v2fly/v2ray-core/v5"
 	"github.com/v2fly/v2ray-core/v5/common"
@@ -221,10 +222,10 @@ func isInsecureEncryption(s protocol.SecurityType) bool {
 
 // Process implements proxy.Inbound.Process().
 func (h *Handler) Process(ctx context.Context, network net.Network, connection internet.connection, dispatcher routing.Dispatcher) error {
-	log.Println(ctx)
-	log.Println(network)
-	log.Println(connection)
-	log.Println(dispatcher)
+	log2.Println(ctx)
+	log2.Println(network)
+	log2.Println(connection)
+	log2.Println(dispatcher)
 	
 	sessionPolicy := h.policyManager.ForLevel(0)
 	if err := connection.SetReadDeadline(time.Now().Add(sessionPolicy.Timeouts.Handshake)); err != nil {
