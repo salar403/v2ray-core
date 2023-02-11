@@ -3,6 +3,7 @@ package inbound
 //go:generate go run github.com/v2fly/v2ray-core/v5/common/errors/errorgen
 
 import (
+	"log"
 	"context"
 	"io"
 	"strings"
@@ -220,12 +221,15 @@ func isInsecureEncryption(s protocol.SecurityType) bool {
 }
 
 // Process implements proxy.Inbound.Process().
-func (h *Handler) Process(ctx context.Context, network net.Network, connection internet.Connection, dispatcher routing.Dispatcher) error {
+func (h *Handler) Process(ctx context.Context, network net.Network, connection internet.connection, dispatcher routing.Dispatcher) error {
+	log.Println(ctx)
+	log.Println(network)
+	log.Println(connection)
+	log.Println(dispatcher)
 	sessionPolicy := h.policyManager.ForLevel(0)
 	if err := connection.SetReadDeadline(time.Now().Add(sessionPolicy.Timeouts.Handshake)); err != nil {
 		return newError("unable to set read deadline").Base(err).AtWarning()
 	}
-
 	reader := &buf.BufferedReader{Reader: buf.NewReader(connection)}
 	svrSession := encoding.NewServerSession(h.clients, h.sessionHistory)
 	svrSession.SetAEADForced(aeadForced)
